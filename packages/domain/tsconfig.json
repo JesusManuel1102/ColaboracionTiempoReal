@@ -1,0 +1,25 @@
+{
+  "extends": "@repo/typescript-config/base.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "useUnknownInCatchVariables": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "composite": true,
+    "declaration": true,
+    "incremental": true,
+    "module": "NodeNext",
+    "moduleResolution": "nodenext",
+    "resolveJsonModule": true,
+    "lib": ["ES2022"],
+    "moduleDetection": "force",
+    "noEmit": false, // ¡Cambio clave: permite emitir JS y .d.ts!
+    "tsBuildInfoFile": "./.turbo/tsconfig.tsbuildinfo",
+    "declarationMap": true, // Para debugging en VSCode
+    "sourceMap": true // Opcional: para sourcemaps en dist/
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist", "**/*.test.ts"],
+}

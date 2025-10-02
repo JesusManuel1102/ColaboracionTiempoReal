@@ -1,0 +1,45 @@
+{
+  "name": "domain",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "types": "./dist/index.d.ts",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./auth-domain": {
+      "import": "./dist/auth-domain/index.js",
+      "types": "./dist/auth-domain/index.d.ts"
+    },
+    "./profile-domain": {
+      "import": "./dist/profile-domain/index.js",
+      "types": "./dist/profile-domain/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "type-check": "tsc --noEmit",
+    "clean": "rm -rf dist",
+    "prepublishOnly": "pnpm run build"
+  },
+  "keywords": [
+    "ddd",
+    "domain",
+    "hexagonal",
+    "auth",
+    "profile"
+  ],
+  "author": "anonimo",
+  "license": "ISC",
+  "devDependencies": {
+    "@repo/typescript-config": "workspace:*",
+    "typescript": "^5.9.3"
+  }
+}

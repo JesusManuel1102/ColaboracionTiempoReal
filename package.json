@@ -3,7 +3,10 @@
   "private": true,
   "scripts": {
     "build": "turbo run build",
+    "build:watch": "turbo run build --watch",
     "dev": "turbo run dev",
+    "type-check": "turbo run type-check",
+    "clean": "turbo run clean && rm -rf **/dist **/.turbo",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-types": "turbo run check-types"

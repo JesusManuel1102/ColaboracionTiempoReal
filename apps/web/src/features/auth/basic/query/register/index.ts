@@ -16,12 +16,10 @@ export const useRegister = () => {
     mutationKey: ["auth/register"],
     mutationFn: AuthenticationServices.register,
     onSuccess: (data) => {
-      if (data) {
-        setStorageData("access_token", data.data);
+      if (data.token) {
+        setStorageData("access_token", data.token);
         navigate("/");
       }
-
-      console.log(data);
     },
     onError: (error) => {
       alert("Error al registrar. Verifica los datos ingresados." + error);

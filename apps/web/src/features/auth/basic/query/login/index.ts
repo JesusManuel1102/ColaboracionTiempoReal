@@ -17,11 +17,10 @@ export const useLogin = () => {
     mutationFn: AuthenticationServices.login,
     retry: 1, // Número de intentos de en caso de error en las consultas
     onSuccess: (data) => {
-      if (data.success === true) {
-        setStorageData("access_token", data.data);
+      if (data.token) {
+        setStorageData("access_token", data.token);
         navigate("/");
       }
-      console.log(data);
     },
     onError: (error) => {
       alert("Error al iniciar sesion. Verifica los datos ingresados." + error);

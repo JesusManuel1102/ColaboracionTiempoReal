@@ -9,7 +9,7 @@
       "@repo/domain/*": ["../../packages/domain/src/*"],
       "@repo/infraestructure/*": ["../../packages/infraestructure/src/*"],
       "@repo/realtime/*": ["../../packages/realtime/src/*"],
-      "@repo/security/*": ["../../packages/security/dist/*"],
+      "@repo/security/*": ["../../packages/security/src/*"],
       "@repo/shared/*": ["../../packages/shared/src/*"]
     },
     "useUnknownInCatchVariables": true,

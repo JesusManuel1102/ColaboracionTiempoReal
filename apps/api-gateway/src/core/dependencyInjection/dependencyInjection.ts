@@ -1,5 +1,9 @@
 import dbInstance from "@/infraestructure/mongodb/config/index.js";
-import { AuthServices, IHashingService, IUserRepository } from "@repo/domain/auth-domain";
+import {
+  AuthServices,
+  IHashingService,
+  IUserRepository,
+} from "@repo/domain/auth-domain";
 import { MongoUserRepository } from "@repo/infraestructure/mongodb";
 import { ItokenService, JwtTokenService } from "@repo/security/jsonwebtoken";
 import { BcryptHashingService } from "@repo/security/hashing";
@@ -11,7 +15,6 @@ export interface IDependencyInjection {
 }
 
 export async function initializeDependencyInjection(jwtSecret: string) {
-
   // Iniciamos la coneccion a la base de datos
   await dbInstance.connect();
 
@@ -21,13 +24,10 @@ export async function initializeDependencyInjection(jwtSecret: string) {
   const userRepository: IUserRepository = new MongoUserRepository();
 
   // Inyectamos las dependencias en el AuthServices
-  const authServices = new AuthServices(
-    userRepository,
-    hashingService,
-  );
+  const authServices = new AuthServices(userRepository, hashingService);
 
   return {
     authServices,
     tokenService,
-  }
+  };
 }

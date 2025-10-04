@@ -30,7 +30,7 @@ export class MongoUserRepository implements IUserRepository {
       throw new Error("Error finding user by uuid");
     }
   }
-  
+
   async findByEmail(email: string): Promise<DomainUser | null> {
     try {
       const document = await UserModel.findOne({ email });
@@ -39,8 +39,9 @@ export class MongoUserRepository implements IUserRepository {
       throw new Error("Error finding user by email");
     }
   }
-  
+
   async create(user: DomainUser): Promise<void> {
+
     try {
       const persistenceObject = {
         uuid: user.uuid,
@@ -51,12 +52,9 @@ export class MongoUserRepository implements IUserRepository {
         isOnline: user.isOnline,
       };
 
-      await UserModel.findByIdAndUpdate({ uuid: user.uuid }, persistenceObject, {
-        upsert: true,
-        new: true,
-      }).lean().exec();
+      await new UserModel(persistenceObject).save();
     } catch (error) {
-      throw new Error("Error creating user");
+      throw new Error("Error creating user: " + error);
     }
   }
 }

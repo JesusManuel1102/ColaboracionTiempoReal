@@ -11,21 +11,14 @@ export interface UserDocument
 const UserSchema = new Schema<UserDocument>(
   {
     uuid: { type: String, required: true, unique: true },
+    username: { type: String, required: true, unique: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     isVerified: { type: Boolean, default: false },
-    apiKey: {
-      type: String,
-      unique: true,
-      default: "",
-      sparse: true,
-      required: false,
-    },
   },
   {
     timestamps: true,
     versionKey: false,
-    _id: false,
   }
 );
 

@@ -7,4 +7,8 @@ export class HashedPassword {
     }
     return new HashedPassword(hashedValue);
   }
+
+  public toString(): string {
+    return this.value;
+  }
 }

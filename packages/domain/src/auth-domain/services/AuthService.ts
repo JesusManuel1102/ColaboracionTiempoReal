@@ -10,11 +10,10 @@ export interface IHashingService {
 export class AuthServices {
   constructor(
     private userRepository: IUserRepository,
-    private hashingService: IHashingService,
-  ) { }
-  
-  public async register(username: string, email: string, password: string) {
+    private hashingService: IHashingService
+  ) {}
 
+  public async register(username: string, email: string, password: string) {
     const existingUser = await this.userRepository.findByEmail(email);
     if (existingUser) {
       throw new Error("Email already registered");
@@ -28,7 +27,9 @@ export class AuthServices {
       email,
       password: hashedPassword,
     });
+
     await this.userRepository.create(newUser);
+
     return newUser;
   }
 
@@ -38,7 +39,10 @@ export class AuthServices {
     if (!user) {
       throw new Error("User not found"); // Esto es un error de dominio
     }
-    const isPasswordValid = await this.hashingService.comparePassword(password, user.password.toString());
+    const isPasswordValid = await this.hashingService.comparePassword(
+      password,
+      user.password.toString()
+    );
     if (!isPasswordValid) {
       throw new Error("Invalid password");
     }
@@ -47,5 +51,4 @@ export class AuthServices {
 
     return user;
   }
-
 }

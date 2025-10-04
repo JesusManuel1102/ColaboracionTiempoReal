@@ -14,4 +14,8 @@ export class EmailAddress {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   }
+
+  public toString(): string {
+    return this.value;
+  }
 }

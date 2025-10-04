@@ -1,5 +1,4 @@
-import initApp from "./app.ts";
-import http from "http";
+import initApp from "./app.js";
 
 async function startServer() {
   const Application = await initApp;

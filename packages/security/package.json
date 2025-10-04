@@ -1,18 +1,22 @@
 {
-  "name": "security",
+  "name": "@repo/security",
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
-  "types": "./dist/types/index.d.ts",
+  "types": "dist/index.d.ts",
   "type": "module",
   "exports": {
     ".": {
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
     },
-    "./mongodb": {
-      "import": "./dist/persistence/mongodb/index.js",
-      "types": "./dist/persistence/mongodb/index.d.ts"
+    "./jsonwebtoken": {
+      "import": "./dist/jsonwebtoken/index.js",
+      "types": "./dist/jsonwebtoken/index.d.ts"
+    },
+    "./hashing": {
+      "import": "./dist/hashing-service/index.js",
+      "types": "./dist/hashing-service/index.d.ts"
     }
   },
   "files": [
@@ -20,17 +24,34 @@
     "README.md"
   ],
   "scripts": {
-    "build": "tsc",
+    "build": "pnpm run clean && tsc",
     "dev": "tsc --watch",
     "type-check": "tsc --noEmit",
-    "clean": "rm -rf dist",
+    "clean": "rimraf dist .turbo",
     "prepublishOnly": "pnpm run build"
   },
-  "keywords": ["ddd", "domain", "hexagonal", "auth", "profile"],
+  "keywords": [
+    "ddd",
+    "domain",
+    "hexagonal",
+    "auth",
+    "profile"
+  ],
   "author": "anonimo",
   "license": "ISC",
   "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
+    "@types/bcrypt": "^6.0.0",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/node": "^22.15.3",
+    "rimraf": "^6.0.1",
     "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@repo/domain": "workspace:*",
+    "bcrypt": "^6.0.0",
+    "google-auth-library": "^10.4.0",
+    "jsonwebtoken": "^9.0.2"
   }
 }

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
-  "types": "./dist/index.d.ts",
+  "types": "dist/index.d.ts",
   "type": "module",
   "exports": {
     ".": {
@@ -23,10 +23,10 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsc",
+    "build": "pnpm run clean && tsc",
     "dev": "tsc --watch",
     "type-check": "tsc --noEmit",
-    "clean": "rm -rf dist",
+    "clean": "rimraf dist .turbo",
     "prepublishOnly": "pnpm run build"
   },
   "keywords": [
@@ -39,7 +39,10 @@
   "author": "anonimo",
   "license": "ISC",
   "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
+    "@types/node": "^22.15.3",
+    "rimraf": "^6.0.1",
     "typescript": "^5.9.3"
   }
 }

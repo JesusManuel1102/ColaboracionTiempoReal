@@ -3,6 +3,10 @@
   "compilerOptions": {
     "outDir": "./dist",
     "rootDir": "./src",
+    "baseUrl": ".",
+    "paths": {
+      "@repo/domain/*": ["../../domain/dist/*"]
+    },
     "useUnknownInCatchVariables": true,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
@@ -10,8 +14,6 @@
     "composite": true,
     "declaration": true,
     "incremental": true,
-    "module": "NodeNext",
-    "moduleResolution": "nodenext",
     "resolveJsonModule": true,
     "lib": ["ES2022"],
     "moduleDetection": "force",

@@ -1,4 +1,3 @@
-export const securityPackage = {
-  name: "@repo/security",
-  version: "1.0.0",
-};
+export * from "./config/config.js";
+export * from "./repositories/index.js";
+export * from "./schemas/index.js";

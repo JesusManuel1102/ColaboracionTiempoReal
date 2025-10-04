@@ -1,7 +1,12 @@
 import cors from 'cors'
+import dotenv from 'dotenv'
 
-const originWhitelist = [
-  "http://localhost:5173",
+dotenv.config()
+
+const clientUrl = process.env.CLIENT_URL || ""
+
+export const originWhitelist = [
+  clientUrl,
   "http://localhost:3000",
   "Insomnia"
 ];

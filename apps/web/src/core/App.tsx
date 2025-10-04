@@ -1,14 +1,23 @@
-import useSocket from "../infraestructure/sockets/hook/useSocket"
+import { QueryClientProvider } from "@tanstack/react-query";
+import { Suspense } from "react";
+import { QueryClientConfig } from "./config/tanstackQuery/queryClientConfig";
+import { ApplicationRouter } from "./router/router";
 
 function App() {
-
-  useSocket()
-
   return (
-    <>
-      <h1>Hola desde React</h1>
-    </>
-  )
+    // <GoogleProviderConfig>
+      <Suspense
+        fallback={
+          <>
+            Cargando contenido... <br /> Por favor espere!
+          </>
+        }>
+        <QueryClientProvider client={QueryClientConfig}>
+          <ApplicationRouter />
+        </QueryClientProvider>
+      </Suspense>
+    // </GoogleProviderConfig>
+  );
 }
 
-export default App
+export default App;

@@ -10,16 +10,14 @@
     "composite": true,
     "declaration": true,
     "incremental": true,
-    "module": "NodeNext",
-    "moduleResolution": "nodenext",
     "resolveJsonModule": true,
     "lib": ["ES2022"],
     "moduleDetection": "force",
-    "noEmit": false, // ¡Cambio clave: permite emitir JS y .d.ts!
+    "noEmit": false,
     "tsBuildInfoFile": "./.turbo/tsconfig.tsbuildinfo",
-    "declarationMap": true, // Para debugging en VSCode
-    "sourceMap": true // Opcional: para sourcemaps en dist/
+    "declarationMap": true,
+    "sourceMap": true
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist", "**/*.test.ts"],
+  "exclude": ["node_modules", "dist", "**/*.test.ts"]
 }

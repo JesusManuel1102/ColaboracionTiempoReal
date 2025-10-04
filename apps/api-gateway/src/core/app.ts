@@ -1,21 +1,26 @@
-import express, { Express, Request, Response } from "express";
+import { CorsConfig, originWhitelist } from "@/config/cors/index.js";
+import { setHeaders } from "@/config/headers/index.js";
+import { limiter } from "@/config/limiter/index.js";
+import { createSocketServer } from "@repo/realtime/socket/server";
 import dotenv from "dotenv";
+import express, { Express, Request, Response } from "express";
 import helmet from "helmet";
-import { setHeaders } from "@/config/headers/index.ts";
-import { CorsConfig } from "@/config/cors/index.ts";
+import http from "http";
 import {
   globalErrorHandler,
   notFoundHandler,
-} from "./errors/middleware/errorHandler.ts";
-import { limiter } from "@/config/limiter/index.ts";
-import { createSocketServer } from "@repo/realtime/socket/server";
-import http from "http";
+} from "./errors/middleware/errorHandler.js";
+import { initializeDependencyInjection } from "./dependencyInjection/dependencyInjection.js";
+import { TOKEN_SECRET } from "@/constants/env/index.js";
+import ApplicationRouter from "./router/router.js";
 
 dotenv.config();
 
 async function initApp() {
   const Application: Express = express();
   const server = http.createServer(Application);
+
+  const container = await initializeDependencyInjection(TOKEN_SECRET!);
 
   // Configuraciones Globales de Express
   Application.use(helmet());
@@ -25,7 +30,10 @@ async function initApp() {
   Application.use(express.urlencoded({ extended: true, limit: "1mb" }));
 
   // Rutas
-  Application.use("/api", (req: Request, res: Response) => {
+  const mainRouter = ApplicationRouter(container);
+  Application.use("/api/v1", mainRouter);
+
+  Application.use("/api/v1", (_req: Request, res: Response) => {
     res.send("Hola desde mi api en node.js");
   });
 
@@ -42,7 +50,7 @@ async function initApp() {
   Application.disable("x-powered-by");
 
   // Configuración de Socket.IO
-  const { io } = createSocketServer(server);
+  const { io } = createSocketServer(server, originWhitelist);
   // Configuramos los events handler para el socket
 
   return server;

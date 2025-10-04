@@ -1,6 +1,11 @@
 import { Request, Response, NextFunction } from "express";
-import { AppError } from "../AppError.ts";
-import { ErrorResponse, ErrorCodes } from "../types/errors.ts";
+import { AppError } from "../AppError.js";
+import { ErrorResponse, ErrorCodes } from "../types/errors.js";
+
+// Type guard para AppError
+function isAppError(error: Error): error is AppError {
+  return error instanceof AppError;
+}
 
 // Logger simple (puedes reemplazarlo con winston o tu logger preferido)
 const logger = {
@@ -16,7 +21,7 @@ const logger = {
  * Determina si un error es operacional (esperado) o un error del sistema
  */
 const isOperationalError = (error: Error): boolean => {
-  if (error instanceof AppError) {
+  if (isAppError(error)) {
     return error.isOperational;
   }
   return false;

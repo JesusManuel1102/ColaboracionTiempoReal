@@ -10,8 +10,6 @@
     "composite": true,
     "declaration": true,
     "incremental": true,
-    "module": "NodeNext",
-    "moduleResolution": "nodenext",
     "resolveJsonModule": true,
     "lib": ["ES2022"],
     "moduleDetection": "force",

@@ -2,14 +2,23 @@
   "name": "my-monorepo-template",
   "private": true,
   "scripts": {
+    "dev": "turbo run dev",
     "build": "turbo run build",
     "build:watch": "turbo run build --watch",
-    "dev": "turbo run dev",
-    "type-check": "turbo run type-check",
     "clean": "turbo run clean && rm -rf **/dist **/.turbo",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "check-types": "turbo run check-types"
+    "type-check": "turbo run type-check",
+    "check-types": "turbo run check-types",
+    "build:all": "turbo run build",
+    "build:apps": "turbo run build --filter=@repo/apps",
+    "build:api-gateway": "turbo run build --filter=api-gateway",
+    "build:web": "turbo run build --filter=web",
+    "build:domain": "turbo run build --filter=@repo/domain",
+    "build:infraestructure": "turbo run build --filter=@repo/infraestructure",
+    "build:security": "turbo run build --filter=@repo/security",
+    "build:realtime": "turbo run build --filter=@repo/realtime",
+    "build:shared": "turbo run build --filter=@repo/shared"
   },
   "devDependencies": {
     "prettier": "^3.6.2",

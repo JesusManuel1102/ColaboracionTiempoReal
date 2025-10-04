@@ -8,7 +8,7 @@ import {
   DatabaseError,
   ExternalServiceError,
   BusinessRuleError,
-} from "../AppError.ts";
+} from "../AppError.js";
 
 /**
  * Utilidades para lanzar errores de manera consistente

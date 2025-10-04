@@ -1,13 +1,17 @@
 {
   "extends": "@repo/typescript-config/base.json",
   "compilerOptions": {
-    "outDir": "dist",
-    "baseUrl": ".",
+    "outDir": "./dist",
     "rootDir": "./src",
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "@repo/domain/*": ["../../packages/domain/src/*"],
+      "@repo/infraestructure/*": ["../../packages/infraestructure/src/*"],
+      "@repo/realtime/*": ["../../packages/realtime/src/*"],
+      "@repo/security/*": ["../../packages/security/dist/*"],
+      "@repo/shared/*": ["../../packages/shared/src/*"]
     },
-    "allowImportingTsExtensions": true,
     "useUnknownInCatchVariables": true,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
@@ -15,14 +19,16 @@
     "composite": true,
     "declaration": true,
     "incremental": true,
-    "module": "NodeNext",
-    "moduleResolution": "nodenext",
-    "types": ["node"],
+
     "resolveJsonModule": true,
     "lib": ["ES2022"],
     "moduleDetection": "force",
-    "noEmit": true,
+    "noEmit": false, // ¡Cambio clave: permite emitir JS y .d.ts!
+    "tsBuildInfoFile": "./.turbo/tsconfig.tsbuildinfo",
+    "declarationMap": true, // Para debugging en VSCode
+    "sourceMap": true // Opcional: para sourcemaps en dist/
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules", "**/*.spec.ts", "**/*.test.ts", "dist"]
+  "exclude": ["node_modules", "dist", "**/*.test.ts"]
 }
+

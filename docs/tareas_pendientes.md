@@ -8,8 +8,6 @@ Este documento describe las tareas pendientes para cada requerimiento funcional 
 
 **Tareas Pendientes:**
 
--   **Implementar Inicio de Sesión de Usuarios:** Desarrollar la lógica para que los usuarios puedan iniciar sesión, incluyendo la verificación de credenciales y la generación de tokens de sesión (JWT).
-    -   **Módulos Involucrados:** `api-gateway`, `@repo/domain`, `@repo/security` (JwtService).
 -   **Implementar Autenticación y Autorización:** Desarrollar mecanismos completos de autenticación (basados en tokens) y autorización (roles, permisos) para proteger las rutas de la API.
     -   **Módulos Involucrados:** `api-gateway`, `@repo/security`.
 -   **Gestión de Perfiles de Usuario:** Permitir a los usuarios ver y editar su información básica.

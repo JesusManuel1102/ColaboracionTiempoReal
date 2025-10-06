@@ -41,7 +41,6 @@ export class MongoUserRepository implements IUserRepository {
   }
 
   async create(user: DomainUser): Promise<void> {
-
     try {
       const persistenceObject = {
         uuid: user.uuid,

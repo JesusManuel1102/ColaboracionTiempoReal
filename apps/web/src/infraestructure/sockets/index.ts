@@ -1,3 +1,6 @@
 import { createSocketClient } from "@repo/realtime/socket/client";
 
-export const socketClient = createSocketClient("http://localhost:3001");
+export const socketClient = createSocketClient(
+  "http://localhost:3001",
+  sessionStorage.getItem("access_token") || ""
+);

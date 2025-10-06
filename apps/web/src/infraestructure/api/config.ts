@@ -11,7 +11,7 @@ export const ApiIntance = axios.create({
 // Add a request interceptor to inject the token
 ApiIntance.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("accessToken"); // or however you store the token
+    const token = sessionStorage.getItem("access_token"); // or however you store the token
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }

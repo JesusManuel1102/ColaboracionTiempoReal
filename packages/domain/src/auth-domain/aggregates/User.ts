@@ -17,7 +17,17 @@ export interface UserProps {
 export class User {
   private constructor(private props: UserProps) {}
 
-  public static createNew({ uuid, username, email, password }: { uuid: string, username: string, email: string, password: string }): User {
+  public static createNew({
+    uuid,
+    username,
+    email,
+    password,
+  }: {
+    uuid: string;
+    username: string;
+    email: string;
+    password: string;
+  }): User {
     return new User({
       uuid,
       username,
@@ -33,12 +43,24 @@ export class User {
   }
 
   // Definimos metodos de dominio
-  public get uuid(): string { return this.props.uuid }
-  public get username(): string { return this.props.username }
-  public get email(): EmailAddress { return this.props.email }
-  public get password(): HashedPassword { return this.props.password }
-  public get isVerified(): boolean { return this.props.isVerified }
-  public get isOnline(): boolean { return this.props.isOnline }
+  public get uuid(): string {
+    return this.props.uuid;
+  }
+  public get username(): string {
+    return this.props.username;
+  }
+  public get email(): EmailAddress {
+    return this.props.email;
+  }
+  public get password(): HashedPassword {
+    return this.props.password;
+  }
+  public get isVerified(): boolean {
+    return this.props.isVerified;
+  }
+  public get isOnline(): boolean {
+    return this.props.isOnline;
+  }
   // public get isActive(): boolean { return this.props.isActive }
   // public get apiKey(): string | undefined { return this.props.apiKey }
 
@@ -54,5 +76,4 @@ export class User {
   public getProps(): UserProps {
     return { ...this.props };
   }
-
 }

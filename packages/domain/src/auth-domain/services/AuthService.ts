@@ -1,5 +1,7 @@
 import { User } from "../aggregates/User.js";
 import { IUserRepository } from "../repositories/IUserRepository.js";
+import { IEventPublisher } from "../ports/IEventPublisher.js";
+import { UserRegisteredEvent } from "../events/UserRegisteredEvent.js";
 import crypto from "node:crypto";
 
 export interface IHashingService {
@@ -10,7 +12,8 @@ export interface IHashingService {
 export class AuthServices {
   constructor(
     private userRepository: IUserRepository,
-    private hashingService: IHashingService
+    private hashingService: IHashingService,
+    private eventPublisher: IEventPublisher
   ) {}
 
   public async register(username: string, email: string, password: string) {
@@ -29,6 +32,14 @@ export class AuthServices {
     });
 
     await this.userRepository.create(newUser);
+
+    // Publicar el evento UserRegisteredEvent
+    await this.eventPublisher.publish({
+      type: "UserRegisteredEvent",
+      userId: newUser.uuid.toString(),
+      username: newUser.username.toString(),
+      email: newUser.email.toString(),
+    } as UserRegisteredEvent);
 
     return newUser;
   }

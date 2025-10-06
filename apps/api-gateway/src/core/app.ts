@@ -1,17 +1,18 @@
 import { CorsConfig, originWhitelist } from "@/config/cors/index.js";
 import { setHeaders } from "@/config/headers/index.js";
 import { limiter } from "@/config/limiter/index.js";
+import { TOKEN_SECRET } from "@/constants/env/index.js";
+import { initializeEventBus } from "@/infraestructure/events/index.js";
 import { createSocketServer } from "@repo/realtime/socket/server";
 import dotenv from "dotenv";
-import express, { Express, Request, Response } from "express";
+import express, { Express } from "express";
 import helmet from "helmet";
 import http from "http";
+import { initializeDependencyInjection } from "./dependencyInjection/dependencyInjection.js";
 import {
   globalErrorHandler,
   notFoundHandler,
 } from "./errors/middleware/errorHandler.js";
-import { initializeDependencyInjection } from "./dependencyInjection/dependencyInjection.js";
-import { TOKEN_SECRET } from "@/constants/env/index.js";
 import ApplicationRouter from "./router/router.js";
 
 dotenv.config();
@@ -21,6 +22,7 @@ async function initApp() {
   const server = http.createServer(Application);
 
   const container = await initializeDependencyInjection(TOKEN_SECRET!);
+  await initializeEventBus(container);
 
   // Configuraciones Globales de Express
   Application.use(helmet());
@@ -32,10 +34,6 @@ async function initApp() {
   // Rutas
   const mainRouter = ApplicationRouter(container);
   Application.use("/api/v1", mainRouter);
-
-  Application.use("/api/v1", (_req: Request, res: Response) => {
-    res.send("Hola desde mi api en node.js");
-  });
 
   // Limitamos las peticiones a nuestros endpoints
   Application.use(limiter);
@@ -50,7 +48,11 @@ async function initApp() {
   Application.disable("x-powered-by");
 
   // Configuración de Socket.IO
-  const { io } = createSocketServer(server, originWhitelist);
+  const { io } = createSocketServer(
+    server,
+    container.tokenService,
+    originWhitelist
+  );
   // Configuramos los events handler para el socket
 
   return server;

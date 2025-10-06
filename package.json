@@ -12,10 +12,10 @@
     "check-types": "turbo run check-types",
     "build:all": "turbo run build",
     "build:apps": "turbo run build --filter=@repo/apps",
-    "build:api-gateway": "turbo run build --filter=api-gateway",
+    "build:api": "turbo run build --filter=api-gateway",
     "build:web": "turbo run build --filter=web",
     "build:domain": "turbo run build --filter=@repo/domain",
-    "build:infraestructure": "turbo run build --filter=@repo/infraestructure",
+    "build:infra": "turbo run build --filter=@repo/infraestructure",
     "build:security": "turbo run build --filter=@repo/security",
     "build:realtime": "turbo run build --filter=@repo/realtime",
     "build:shared": "turbo run build --filter=@repo/shared"

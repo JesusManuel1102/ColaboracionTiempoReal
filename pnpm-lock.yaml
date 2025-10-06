@@ -224,6 +224,9 @@ importers:
 
   packages/realtime:
     dependencies:
+      '@repo/security':
+        specifier: workspace:*
+        version: link:../security
       socket.io:
         specifier: ^4.8.1
         version: 4.8.1

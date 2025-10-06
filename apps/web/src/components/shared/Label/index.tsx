@@ -21,8 +21,7 @@ type Props = {
 
 const labelStyles = {
   variants: {
-    default:
-      "input",
+    default: "input",
   },
   sizes: {
     small: "py-2 px-3 text-sm",
@@ -60,8 +59,8 @@ export const Label: React.FC<Props> = ({
   return (
     <>
       <label htmlFor={id}>
-        <h4 className="mb-2 text-sm text-text-secondary">{label}</h4>
-        <div className="label">
+        <h4 className="mb-2 text-sm font-semibold">{label}</h4>
+        <div className="label flex items-center p-2 gap-2 border-1 border-gray-400 rounded-md">
           {icon}
           <input
             type={typeInput}
@@ -77,8 +76,7 @@ export const Label: React.FC<Props> = ({
             <button
               type="button"
               onClick={rightIconOnClick}
-              className="flex-shrink-0 cursor-pointer"
-            >
+              className="flex-shrink-0 cursor-pointer">
               {rightIcon}
             </button>
           )}

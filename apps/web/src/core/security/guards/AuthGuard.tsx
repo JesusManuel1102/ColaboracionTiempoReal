@@ -1,5 +1,5 @@
 import { Outlet, Navigate } from "react-router-dom";
-import { useSessionStorageListener } from "../../../hooks/storage-web/useSessionStorageListener";
+import { useGlobalStore } from "../../store/global_store";
 
 interface Props {
   validation: boolean;
@@ -8,10 +8,12 @@ interface Props {
 const privateFragment = <Outlet />;
 const publicFragment = <Navigate replace to={"/"} />;
 
-export const AuthGuards: React.FC<Props> = ({ validation }): React.ReactNode => {
-  const isTokenExist = useSessionStorageListener("access_token");
+export const AuthGuards: React.FC<Props> = ({
+  validation,
+}): React.ReactNode => {
+  const { isAuthenticated } = useGlobalStore();
 
-  return isTokenExist ? (
+  return isAuthenticated ? (
     validation ? (
       privateFragment
     ) : (

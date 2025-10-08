@@ -1,11 +1,11 @@
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import AuthenticationServices from "../../service";
-import { useSesionStorage } from "../../../../../hooks/storage-web/useSessionStorage";
+import { useGlobalStore } from "../../../../../core/store/global_store";
 
 export const useLogin = () => {
   const navigate = useNavigate();
-  const { setStorageData } = useSesionStorage();
+  const { setAuth } = useGlobalStore();
 
   const {
     mutateAsync: authenticate,
@@ -18,7 +18,7 @@ export const useLogin = () => {
     retry: 1, // Número de intentos de en caso de error en las consultas
     onSuccess: (data) => {
       if (data.token) {
-        setStorageData("access_token", data.token);
+        setAuth(data.token);
         navigate("/");
       }
     },

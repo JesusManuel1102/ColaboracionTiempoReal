@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useGlobalStore } from "../../core/store/global_store";
 
 export const ApiIntance = axios.create({
   baseURL: import.meta.env.VITE_API_URL, // Replace with your API endpoint
@@ -11,7 +12,7 @@ export const ApiIntance = axios.create({
 // Add a request interceptor to inject the token
 ApiIntance.interceptors.request.use(
   (config) => {
-    const token = sessionStorage.getItem("access_token"); // or however you store the token
+    const token = useGlobalStore.getState().token; // 🔥 obtiene token actual de Zustand
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }

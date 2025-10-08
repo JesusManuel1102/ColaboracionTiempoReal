@@ -1,11 +1,11 @@
 import { useMutation } from "@tanstack/react-query";
 import AuthenticationServices from "../../service";
 import { useNavigate } from "react-router-dom";
-import { useSesionStorage } from "../../../../../hooks/storage-web/useSessionStorage";
+import { useGlobalStore } from "../../../../../core/store/global_store";
 
 export const useRegister = () => {
   const navigate = useNavigate();
-  const { setStorageData } = useSesionStorage();
+  const { setAuth } = useGlobalStore();
 
   const {
     mutateAsync: createAccount,
@@ -17,7 +17,7 @@ export const useRegister = () => {
     mutationFn: AuthenticationServices.register,
     onSuccess: (data) => {
       if (data.token) {
-        setStorageData("access_token", data.token);
+        setAuth(data.token);
         navigate("/");
       }
     },

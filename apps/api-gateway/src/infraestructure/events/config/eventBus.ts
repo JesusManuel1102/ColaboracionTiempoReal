@@ -1,23 +1,22 @@
 import { IDependencyInjection } from "@/core/dependencyInjection/dependencyInjection.js";
-import { ProfileService, UserRegisteredEventHandler } from "@repo/domain/profile-domain";
-import { InMemoryEventBus } from "@repo/infraestructure/events";
+import { registerProfileDomainHandlers } from "@/features/profile/events/registerEvents.js";
+import { ProfileService } from "@repo/domain/profile-domain";
+import { InMemoryEventBroker } from "@repo/infraestructure/events";
+import { UserRegisteredEventHandler } from "@repo/infraestructure/events";
+// import { InMemoryEventBus } from "@repo/infraestructure/events";
 
-export async function initializeEventBus(dependencies: IDependencyInjection) {
-  // Nos Aseguramos que nuestra dependencia sea del tipo correcto
-  const profileService = dependencies.profileService as ProfileService;
-
-  // Instanciamos el manejador de eventos
+export async function initializeEventBus(
+  dependencies: Partial<IDependencyInjection>
+) {
+  // Iniciamos nuestro broker y handlers
+  const eventBroker = new InMemoryEventBroker();
   const userRegisteredEventHandler = new UserRegisteredEventHandler(
-    profileService
+    dependencies.profileService as ProfileService
   );
 
-  // Suscribimos el manejador al bus de eventos
-  InMemoryEventBus.subscribe(
-    "UserRegisteredEvent",
-    userRegisteredEventHandler.handle.bind(userRegisteredEventHandler)
-  );
+  // Registramos el evento (Acoplamiento contorlado)
+  registerProfileDomainHandlers(eventBroker, userRegisteredEventHandler);
 
-  console.log(
-    "Event bus initialized and UserRegisteredEventHandler subscribed."
-  );
+  // 🚨 Retornar el broker para que el sistema de inyección de dependencias (DI) pueda usarlo 🚨
+  return eventBroker;
 }

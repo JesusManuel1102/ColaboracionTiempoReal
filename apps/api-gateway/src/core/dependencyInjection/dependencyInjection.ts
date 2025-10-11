@@ -1,55 +1,76 @@
+import { TOKEN_SECRET } from "@/constants/env/index.js";
 import dbInstance from "@/infraestructure/mongodb/config/index.js";
 import {
   AuthServices,
   IHashingService,
   IUserRepository,
-  IEventPublisher,
 } from "@repo/domain/auth-domain";
-import { InMemoryEventPublisher } from "@repo/infraestructure/events";
-import {
-  MongoProfileRepository,
-  MongoUserRepository,
-} from "@repo/infraestructure/mongodb";
-import { ItokenService, JwtTokenService } from "@repo/security/jsonwebtoken";
-import { BcryptHashingService } from "@repo/security/hashing";
 import {
   IProfileRepository,
   ProfileService,
 } from "@repo/domain/profile-domain";
+import {
+  MongoProfileRepository,
+  MongoUserRepository,
+  MongoVotingRoomRepository,
+} from "@repo/infraestructure/mongodb";
+import { BcryptHashingService } from "@repo/security/hashing";
+import { ItokenService, JwtTokenService } from "@repo/security/jsonwebtoken";
+import { IEventPublisher } from "@repo/shared/events";
+import { initializeEventBus } from "@/infraestructure/events/index.js";
+import { IVotingRoomRepository, VotingRoomService } from "@repo/domain/voting-room-domain";
 
 export interface IDependencyInjection {
   authServices: AuthServices;
   tokenService: ItokenService;
   profileService: ProfileService;
-  eventPublisher: IEventPublisher;
-  // hashingService: IHashingService;
+  votingRoomService: VotingRoomService;
 }
 
-export async function initializeDependencyInjection(jwtSecret: string) {
-  // Iniciamos la coneccion a la base de datos
+export async function initializeDependencyInjection() {
+  // 1. CONEXIÓN A INFRAESTRUCTURA
   await dbInstance.connect();
 
-  // Definimos los repositorios
-  const userRepository: IUserRepository = new MongoUserRepository();
-  const profileRepository: IProfileRepository = new MongoProfileRepository();
+  // 2. REPOSITORIOS (Implementaciones de Infraestructura)
+  // Se definen primero porque son inyectados en los servicios de dominio.
+  const repositories = {
+    userRepository: new MongoUserRepository() as IUserRepository,
+    profileRepository: new MongoProfileRepository() as IProfileRepository,
+    votingRoomRepository: new MongoVotingRoomRepository() as IVotingRoomRepository,
+  };
 
-  // Definimos los servicios e Inyectamos las dependencias
-  const tokenService: ItokenService = new JwtTokenService(jwtSecret);
-  const hashingService: IHashingService = new BcryptHashingService();
-  const eventPublisher: IEventPublisher = new InMemoryEventPublisher();
+  // 3. SERVICIOS DE UTILIDAD (Hashing, Tokens)
+  const utilityServices = {
+    tokenService: new JwtTokenService(TOKEN_SECRET!) as ItokenService,
+    hashingService: new BcryptHashingService() as IHashingService,
+  };
 
-  // Servicios por funcionalidades
-  const profileService: ProfileService = new ProfileService(profileRepository);
+  // 4. SERVICIOS DE DOMINIO - ETAPA 1 (Inicialización para Eventos)
+  const profileService = new ProfileService(repositories.profileRepository);
+  const votingRoomService = new VotingRoomService(repositories.votingRoomRepository);
+
+  // 5. INICIALIZAR EVENT BUS Y REGISTRAR HANDLERS
+  // El Event Bus necesita el ProfileService para inyectarlo en sus Handlers.
+  const eventPublisher: IEventPublisher = await initializeEventBus({
+    profileService,
+  });
+
+  // 6. SERVICIOS DE DOMINIO - ETAPA 2 (Inyección Final)
+  // El AuthServices requiere todas sus dependencias, incluyendo el EventPublisher.
   const authServices = new AuthServices(
-    userRepository,
-    hashingService,
-    eventPublisher
+    repositories.userRepository,
+    utilityServices.hashingService,
+    eventPublisher // 👈 ¡Inyección completada!
   );
 
   return {
+    // Servicios
     authServices,
-    tokenService,
     profileService,
+    votingRoomService,
+    // Eventos
     eventPublisher,
+    // Utilidades
+    tokenService: utilityServices.tokenService,
   };
 }

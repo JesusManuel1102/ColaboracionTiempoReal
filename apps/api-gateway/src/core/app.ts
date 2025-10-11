@@ -1,8 +1,6 @@
 import { CorsConfig, originWhitelist } from "@/config/cors/index.js";
 import { setHeaders } from "@/config/headers/index.js";
 import { limiter } from "@/config/limiter/index.js";
-import { TOKEN_SECRET } from "@/constants/env/index.js";
-import { initializeEventBus } from "@/infraestructure/events/index.js";
 import { createSocketServer } from "@repo/realtime/socket/server";
 import dotenv from "dotenv";
 import express, { Express } from "express";
@@ -21,8 +19,7 @@ async function initApp() {
   const Application: Express = express();
   const server = http.createServer(Application);
 
-  const container = await initializeDependencyInjection(TOKEN_SECRET!);
-  await initializeEventBus(container);
+  const container = await initializeDependencyInjection();
 
   // Configuraciones Globales de Express
   Application.use(helmet());

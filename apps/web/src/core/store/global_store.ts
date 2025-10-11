@@ -4,6 +4,7 @@ import { persist } from 'zustand/middleware'
 interface GlobalState {
   token: string | null;
   user: {
+    userId: string;
     username: string;
     email: string;
     bio: string;
@@ -12,6 +13,7 @@ interface GlobalState {
   isAuthenticated: boolean;
   isOnline: boolean;
   setUser: (user: {
+    userId: string;
     username: string;
     email: string;
     bio: string;

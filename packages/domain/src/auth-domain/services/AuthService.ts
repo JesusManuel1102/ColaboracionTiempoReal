@@ -1,7 +1,7 @@
 import { User } from "../aggregates/User.js";
 import { IUserRepository } from "../repositories/IUserRepository.js";
-import { IEventPublisher } from "../ports/IEventPublisher.js";
 import { UserRegisteredEvent } from "../events/UserRegisteredEvent.js";
+import { IEventPublisher } from "@repo/shared/events";
 import crypto from "node:crypto";
 
 export interface IHashingService {
@@ -33,13 +33,15 @@ export class AuthServices {
 
     await this.userRepository.create(newUser);
 
-    // Publicar el evento UserRegisteredEvent
-    await this.eventPublisher.publish({
-      type: "UserRegisteredEvent",
+    // 1. Crea la instancia de la clase del evento, no un objeto plano.
+    const userRegisteredEvent = new UserRegisteredEvent({
       userId: newUser.uuid.toString(),
       username: newUser.username.toString(),
       email: newUser.email.toString(),
-    } as UserRegisteredEvent);
+    });
+
+    // 2. Publica la instancia
+    await this.eventPublisher.publish(userRegisteredEvent);
 
     return newUser;
   }

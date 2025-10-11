@@ -47,6 +47,7 @@
   },
   "dependencies": {
     "@repo/domain": "workspace:*",
+    "@repo/shared": "workspace:*",
     "mongoose": "^8.19.0"
   }
 }

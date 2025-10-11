@@ -10,16 +10,14 @@ export class ProfileController {
     if (!userId) {
       res.status(401).json({ message: "User ID not found" });
     }
-    console.log("User ID:", userId);
-
     const profile = await this.profileService.getProfileByUserId(userId!);
-    console.log("Profile:", profile);
 
     if (!profile) {
       res.status(404).json({ message: "Profile not found" });
     }
 
     res.status(200).json({
+      userId: profile?.getProps().userId,
       username: profile?.getProps().username,
       email: profile?.getProps().email,
       bio: profile?.getProps().bio,

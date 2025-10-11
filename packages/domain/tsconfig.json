@@ -16,8 +16,14 @@
     "noEmit": false,
     "tsBuildInfoFile": "./.turbo/tsconfig.tsbuildinfo",
     "declarationMap": true,
-    "sourceMap": true
+    "sourceMap": true,
+    "paths": {
+      "@repo/shared/*": ["../shared/src/*"]
+    }
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist", "**/*.test.ts"]
+  "exclude": ["node_modules", "dist", "**/*.test.ts"],
+  "references": [
+    { "path": "../shared" }
+  ]
 }

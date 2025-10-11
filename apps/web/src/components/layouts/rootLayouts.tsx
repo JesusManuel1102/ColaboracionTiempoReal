@@ -1,13 +1,16 @@
 import { Outlet } from "react-router-dom";
+import Header from "../sections/Header";
+import useSocket from "../../infraestructure/sockets/hook/useSocket";
 
 export const RootLayout = () => {
+  useSocket();
+
   return (
     <>
-      <main className="flex">
-        <section className="w-full overflow-y-hidden">
-          <div>
-            <Outlet />
-          </div>
+      <main className="flex flex-col min-h-screen">
+        <Header />
+        <section className="flex-1">
+          <Outlet />
         </section>
       </main>
     </>

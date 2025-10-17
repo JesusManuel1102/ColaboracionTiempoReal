@@ -31,5 +31,6 @@ export const useRegister = () => {
     isPending,
     isError,
     error,
+    // Here you can return any information you need for error handling or data loading
   };
 };

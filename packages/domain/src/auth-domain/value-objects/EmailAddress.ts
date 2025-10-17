@@ -10,7 +10,7 @@ export class EmailAddress {
   }
 
   private static isValid(email: string): boolean {
-    // Implementar regex de validación básica.
+    // Implement basic email validation regex.
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   }

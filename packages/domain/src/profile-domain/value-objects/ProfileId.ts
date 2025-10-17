@@ -1,6 +1,8 @@
 import crypto from 'node:crypto';
 
-// Value Object para ProfileId
+/**
+ * Value Object for ProfileId
+ */
 export class ProfileId {
   private constructor(private readonly value: string) {}
 

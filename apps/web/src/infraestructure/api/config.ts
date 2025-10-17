@@ -12,7 +12,7 @@ export const ApiIntance = axios.create({
 // Add a request interceptor to inject the token
 ApiIntance.interceptors.request.use(
   (config) => {
-    const token = useGlobalStore.getState().token; // 🔥 obtiene token actual de Zustand
+    const token = useGlobalStore.getState().token; // 🔥 Gets current token from Zustand
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -20,19 +20,3 @@ ApiIntance.interceptors.request.use(
   },
   (error) => Promise.reject(error)
 );
-
-// Optional: Add a response interceptor to handle token expiration
-// ApiIntance.interceptors.response.use(
-//   (response) => response,
-//   async (error) => {
-//     const originalRequest = error.config;
-//     if (error.response?.status === 401 && !originalRequest._retry) {
-//       originalRequest._retry = true;
-//       // Attempt to refresh token or redirect to login
-//       // e.g., await refreshToken(); or router.push("/login");
-//       return ApiIntance(originalRequest);
-//     }
-//     return Promise.reject(error);
-//   }
-// );
-

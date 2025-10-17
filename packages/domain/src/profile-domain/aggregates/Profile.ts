@@ -52,7 +52,9 @@ export class Profile {
     return { ...this.props };
   }
 
-  // Definimos metodos de dominio
+  /**
+   * Domain methods
+   */
   public get uuid(): ProfileId {
     return this.props.uuid;
   }
@@ -77,12 +79,18 @@ export class Profile {
     return this.props.avatarUrl;
   }
 
+  public get createdAt(): Date | undefined {
+    return this.props.createdAt;
+  }
+
+  public get updatedAt(): Date | undefined {
+    return this.props.updatedAt;
+  }
+
   public updateProfile({
     bio,
     avatarUrl,
   }: {
-    firstName?: string;
-    lastName?: string;
     bio?: string;
     avatarUrl?: string;
   }): void {

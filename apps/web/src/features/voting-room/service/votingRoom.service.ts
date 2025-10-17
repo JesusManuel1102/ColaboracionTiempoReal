@@ -23,6 +23,16 @@ class VotingRoomServices {
       return error;
     }
   };
+
+  getAllVotingRoomsByUserId = async () => { 
+    try {
+      const response = await ApiIntance.get(`/voting-room`);
+      return response.data;
+    } catch (error) {
+      console.error("error", error)
+      return error;
+    }
+  }
 }
 
 export default new VotingRoomServices();

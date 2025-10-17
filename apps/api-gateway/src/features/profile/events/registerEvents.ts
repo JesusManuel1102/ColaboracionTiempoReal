@@ -5,9 +5,9 @@ import {
 } from "@repo/infraestructure/events";
 
 /**
- * Registra el UserRegisteredEventHandler en el broker.
- * @param broker La instancia global del broker.
- * @param handler La instancia del manejador (con sus dependencias ya inyectadas).
+ * Registers the UserRegisteredEventHandler with the broker.
+ * @param broker The global broker instance.
+ * @param handler The handler instance (with its dependencies already injected).
  */
 export function registerProfileDomainHandlers(
   broker: InMemoryEventBroker,

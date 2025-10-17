@@ -59,7 +59,7 @@ export class MongoProfileRepository implements IProfileRepository {
     try {
       const document = await ProfileModel.findOneAndUpdate(
         { userId },
-        profile,
+        profile.getProps(),
         { new: true }
       );
       return toDomain(document);

@@ -4,7 +4,7 @@ import { useRegister } from "../query/register";
 import { useGlobalStore } from "../../../../core/store/global_store";
 import { QueryClientConfig } from "../../../../core/config/tanstackQuery/queryClientConfig";
 
-// Hook padre para los metodos de authenticación
+// Parent hook for authentication methods
 export const useAuth = () => {
   const { token, user, isAuthenticated, logout } = useGlobalStore();
   const navigate = useNavigate();

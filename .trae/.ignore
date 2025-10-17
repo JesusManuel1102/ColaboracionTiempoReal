@@ -1,0 +1,6 @@
+dist
+node_modules
+.vscode
+.turbo
+dist/*
+node_modules/*

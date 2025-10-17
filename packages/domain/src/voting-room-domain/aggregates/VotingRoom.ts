@@ -39,7 +39,8 @@ export class VotingRoom {
         maxParticipants: props.settings?.maxParticipants || 5,
         allowAnonymousVoting: props.settings?.allowAnonymousVoting || false,
         requireApprovalToJoin: props.settings?.requireApprovalToJoin || false,
-        canParticipantsCreatePolls: props.settings?.canParticipantsCreatePolls || false,
+        canParticipantsCreatePolls:
+          props.settings?.canParticipantsCreatePolls || false,
         autoCloseRoom: props.settings?.autoCloseRoom || false,
       },
       createdAt: now,
@@ -80,7 +81,7 @@ export class VotingRoom {
   }
 
   public get votingActive(): boolean {
-    return this.props.votingActive ?? false;    
+    return this.props.votingActive ?? false;
   }
 
   public get chatRoom(): ChatMessage[] {
@@ -96,17 +97,19 @@ export class VotingRoom {
   }
 
   public get settings(): RoomSettings {
-    return this.props.settings ?? {
-      maxParticipants: 5,
-      allowAnonymousVoting: false,
-      requireApprovalToJoin: false,
-      canParticipantsCreatePolls: false,
-      autoCloseRoom: false,
-    };
+    return (
+      this.props.settings ?? {
+        maxParticipants: 5,
+        allowAnonymousVoting: false,
+        requireApprovalToJoin: false,
+        canParticipantsCreatePolls: false,
+        autoCloseRoom: false,
+      }
+    );
   }
 
   public get codeInvitation(): string {
-    return this.props.codeInvitation ?? ""; 
+    return this.props.codeInvitation ?? "";
   }
 }
 

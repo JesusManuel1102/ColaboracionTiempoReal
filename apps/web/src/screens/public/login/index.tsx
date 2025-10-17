@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import {
   Eye,
   EyeOff,
@@ -9,11 +8,12 @@ import {
   Vote,
   Zap,
 } from "lucide-react";
-import { useForm } from "../../../hooks/formulary/useForm";
-import { Label } from "../../../components/shared/Label";
-import { Button } from "../../../components/shared/Botton";
-import { useAuth } from "../../../features/auth/basic/hooks/useAuth";
+import { Link } from "react-router-dom";
 import imagen from "../../../assets/collaborative-voting-and-decision-making-illustrat.jpg";
+import { Button } from "../../../components/shared/Botton";
+import { Label } from "../../../components/shared/Label";
+import { useAuth } from "../../../features/auth/basic/hooks/useAuth";
+import { useForm } from "../../../hooks/formulary/useForm";
 
 const Login = () => {
   const {
@@ -46,10 +46,10 @@ const Login = () => {
           <div className="bg-card border-border shadow-xl p-4 rounded-lg">
             <div className="space-y-1 text-center">
               <div className="text-3xl font-bold text-foreground mb-2">
-                Iniciar Sesión
+                Login
               </div>
               <div className="text-muted-foreground">
-                Ingresa tus credenciales para acceder a tu cuenta
+                Enter your credentials to access your account
               </div>
             </div>
             <div>
@@ -60,9 +60,9 @@ const Login = () => {
                   icon={<Mail />}
                   id="email"
                   name="email"
-                  label="Correo Electrónico:"
+                  label="Email:"
                   typeInput="email"
-                  placeholder="tu@email.com"
+                  placeholder="your@email.com"
                   value={FormData.email}
                   onChange={handleChange}
                   error={FormDataError.email}
@@ -71,7 +71,7 @@ const Login = () => {
                 <Label
                   id="password"
                   name="password"
-                  label="Contraseña:"
+                  label="Password:"
                   typeInput={IsVisiblePassword === true ? "text" : "password"}
                   value={FormData.password}
                   onChange={handleChange}
@@ -83,20 +83,19 @@ const Login = () => {
                 />
                 <Button
                   type="submit"
-                  loading={login.isPending}
                   disabled={login.isPending}
                   className="bg-gray-900 text-white p-2 rounded-md mt-3 mb-4 cursor-pointer hover:bg-primary/90 transition-colors">
-                  Iniciar sesión
+                  Login
                 </Button>
               </form>
             </div>
             <div className="flex flex-col gap-4">
               <div className="text-sm text-center text-muted-foreground">
-                ¿No tienes una cuenta?{" "}
+                Don't have an account?{" "}
                 <Link
                   to={"/register"}
                   className="text-primary hover:underline font-medium">
-                  Regístrate aquí
+                  Register here
                 </Link>
               </div>
             </div>
@@ -112,11 +111,11 @@ const Login = () => {
         {/* Content */}
         <div className="flex flex-col items-center justify-center text-center w-full">
           <h2 className="text-xl font-bold text-foreground mb-2 text-balance">
-            Toma decisiones en tiempo real
+            Make decisions in real time
           </h2>
           <p className="text-base text-gray-400 mb-5 max-w-md text-pretty">
-            Colabora con tu equipo, vota en tiempo real y visualiza resultados
-            al instante
+            Collaborate with your team, vote in real time and visualize results
+            instantly
           </p>
 
           {/* Illustration placeholder */}
@@ -146,10 +145,10 @@ const Login = () => {
                 </div>
                 <div>
                   <p className="font-medium text-foreground">
-                    Votación instantánea
+                    Instant voting
                   </p>
                   <p className="text-sm text-gray-400">
-                    Resultados en tiempo real
+                    Real-time results
                   </p>
                 </div>
               </div>
@@ -161,10 +160,10 @@ const Login = () => {
                 </div>
                 <div>
                   <p className="font-medium text-foreground">
-                    Colaboración fluida
+                    Fluid collaboration
                   </p>
                   <p className="text-sm text-gray-400">
-                    Chat integrado y participantes activos
+                    Integrated chat and active participants
                   </p>
                 </div>
               </div>
@@ -176,10 +175,10 @@ const Login = () => {
                 </div>
                 <div>
                   <p className="font-medium text-foreground">
-                    Seguro y confiable
+                    Secure and reliable
                   </p>
                   <p className="text-sm text-gray-400">
-                    Autenticación JWT y encriptación
+                    JWT authentication and encryption
                   </p>
                 </div>
               </div>

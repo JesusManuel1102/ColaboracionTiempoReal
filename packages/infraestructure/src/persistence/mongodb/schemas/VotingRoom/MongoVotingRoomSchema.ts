@@ -11,7 +11,7 @@ const VotingRoomSchema = new Schema<VotingRoomDocument>(
   {
     uuid: { type: String, required: true, unique: true },
     name: { type: String, required: true },
-    description: { type: String, required: true },
+    description: { type: String, required: false }, // Changed to not required
     statusRoom: {
       type: String,
       default: "open",
@@ -28,63 +28,48 @@ const VotingRoomSchema = new Schema<VotingRoomDocument>(
     creatorName: { type: String, required: true },
     participants: [
       {
-        type: {
-          uuid: String,
-          name: String,
-          avatar: String,
-          role: { type: String, enum: ["admin", "voter", "observer"] },
-          isOnline: Boolean,
-        }
+        uuid: String,
+        name: String,
+        avatar: String,
+        role: { type: String, enum: ["admin", "voter", "observer"] },
+        isOnline: Boolean,
       }
     ],
     votingActive: { type: Boolean, default: false },
     codeInvitation: { type: String, required: true },
     currentVoteSession: {
       type: {
-        id: String,
-        topic: String,
+        id: { type: String, required: true },
+        topic: { type: String, required: true },
         options: [
           {
-            id: String,
-            label: String,
-            value: String,
+            id: { type: String, required: true },
+            label: { type: String, required: true },
+            value: { type: Schema.Types.Mixed, required: true },
           },
         ],
-        isAnonymous: Boolean,
-        resultsVisible: Boolean,
-        timeLimit: Number,
-        createdAt: Date,
+        isAnonymous: { type: Boolean, required: true },
+        resultsVisible: { type: Boolean, required: true },
+        timeLimit: { type: Number },
+        createdAt: { type: Date, required: true },
       },
     },
     chatRoom: [
       {
-        type: {
-          userId: String,
-          userName: String,
-          message: String,
-          timestamp: Date,
-          type: { type: String, enum: ["message", "system", "vote"] },
-        },
+        userId: String,
+        userName: String,
+        message: String,
+        timestamp: Date,
+        type: { type: String, enum: ["message", "system", "vote"] },
       },
     ],
     votingHistory: [
       {
-        type: {
-          sessionId: String,
-          topic: String,
-          options: [
-            {
-              id: String,
-              label: String,
-              value: String,
-              votes: Number,
-            },
-          ],
-          isAnonymous: Boolean,
-          resultsVisible: Boolean,
-          timeLimit: Number,
-          createdAt: Date,
-        },
+        sessionId: { type: String, required: true },
+        topic: { type: String, required: true },
+        votes: { type: Map, of: Schema.Types.Mixed, required: true }, // userId -> optionId
+        results: { type: Map, of: Number, required: true }, // optionId -> count
+        timestamp: { type: Date, required: true },
       },
     ],
   },

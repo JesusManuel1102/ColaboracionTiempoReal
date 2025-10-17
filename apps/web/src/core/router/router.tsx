@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { AuthGuards } from "../security/guards/AuthGuard";
-import { HomePage, LoginPage, RegisterPage } from "../../screens";
+import { HomePage, LoginPage, ProfilePage, RegisterPage, RoomPage } from "../../screens";
 import { RootLayout } from "../../components/layouts/rootLayouts";
 
 export const ApplicationRouter = () => { 
@@ -12,6 +12,8 @@ export const ApplicationRouter = () => {
         <Route element={<AuthGuards validation={true} />}>
           <Route path="/" element={<RootLayout />}>
             <Route index element={<HomePage />} />
+            <Route path="profile" element={<ProfilePage />} />
+            <Route path="room/:uuid" element={<RoomPage />} />
           </Route>
         </Route>
       </Routes>

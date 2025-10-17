@@ -1,4 +1,4 @@
-import { VotingRoom } from "../aggregates/VotingRoom.js";
+import { VotingRoom, Participant } from "../aggregates/VotingRoom.js";
 import { VotingRoomId } from "../value-objects/VotingRoomId.js";
 
 /**
@@ -37,4 +37,37 @@ export interface IVotingRoomRepository {
    * @returns A promise that resolves when the voting room is deleted.
    */
   delete(votingRoomId: string): Promise<void>;
+
+  /**
+   * @method getAllVotingRoomByUserId
+   * @description Retrieves all voting rooms associated with a specific user.
+   * @param userId - The ID of the user whose voting rooms are to be retrieved.
+   * @returns A promise that resolves to an array of voting rooms, or null if none are found.
+   */
+  // getAllVotingRoomByUserId(userId: string): Promise<VotingRoom[] | null>;
+  getAllVotingRoomByUserId(userId: string): Promise<VotingRoom[] | null>;
+
+  /**
+   * @method addParticipant
+   * @description Adds a participant to a voting room.
+   * @param votingRoomId - The ID of the voting room.
+   * @param participant - The participant object to add.
+   * @returns A promise that resolves to the updated voting room, or null if not found.
+   */
+  addParticipant(
+    votingRoomId: string,
+    participant: Participant
+  ): Promise<VotingRoom | null>;
+
+  /**
+   * @method updateStatus
+   * @description Updates the status of a voting room.
+   * @param votingRoomId - The ID of the voting room.
+   * @param newStatus - The new status to set for the voting room.
+   * @returns A promise that resolves to the updated voting room, or null if not found.
+   */
+  updateStatus(
+    votingRoomId: string,
+    newStatus: string
+  ): Promise<VotingRoom | null>;
 }

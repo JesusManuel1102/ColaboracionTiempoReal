@@ -2,8 +2,8 @@ import { Request, Response } from "express";
 import { VotingRoomService } from "@repo/domain/voting-room-domain";
 
 export class VotingRoomController {
-  constructor(private votingRoomService: VotingRoomService) { }
-  
+  constructor(private votingRoomService: VotingRoomService) {}
+
   public async createVotingRoom(req: Request, res: Response): Promise<void> {
     const { name, description, createdBy, creatorName } = req.body;
     const votingRoom = await this.votingRoomService.createVotingRoom(
@@ -13,7 +13,7 @@ export class VotingRoomController {
       creatorName
     );
     if (!votingRoom) {
-      res.status(404).json({ message: "Voting Room not found" });
+      throw new Error("Voting Room not found");
     }
     res.status(200).json({
       votingRoomId: votingRoom?.getProps().uuid,
@@ -25,47 +25,90 @@ export class VotingRoomController {
 
   public async findById(req: Request, res: Response): Promise<void> {
     const { votingRoomId } = req.params;
-    const votingRoom = await this.votingRoomService.findVotingRoomById(votingRoomId!);
+    const votingRoom = await this.votingRoomService.findVotingRoomById(
+      votingRoomId!
+    );
     if (!votingRoom) {
-      res.status(404).json({ message: "Voting Room not found" });
+      throw new Error("Voting Room not found");
     }
     res.status(200).json({
       votingRoomId: votingRoom?.getProps().uuid,
       accessCode: votingRoom?.getProps().codeInvitation,
       name: votingRoom?.getProps().name,
       description: votingRoom?.getProps().description,
+      status: votingRoom?.getProps().votingRoomStatus,
+      participants: votingRoom?.getProps().participants,
     });
   }
 
-  // public async getVotingRoomByUserId(req: Request, res: Response): Promise<void> {
-  //   const { userId } = (req as any).user;
+  public async addParticipantToVotingRoom(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    const { votingRoomId } = req.params;
+    const { participant } = req.body;
 
-  //   if (!userId) {
-  //     res.status(401).json({ message: "User ID not found" });
-  //   }
-  //   console.log("User ID:", userId);
+    const updatedVotingRoom =
+      await this.votingRoomService.addParticipantToVotingRoom(
+        votingRoomId!,
+        participant
+      );
 
-  //   const votingRoom = await this.votingRoomService.getVotingRoomByUserId(userId!);
-  //   console.log("Voting Room:", votingRoom);
+    if (!updatedVotingRoom) {
+      throw new Error("Voting Room not found");
+    }
 
-  //   if (!votingRoom) {
-  //     res.status(404).json({ message: "Voting Room not found" });
-  //   }
+    res.status(200).json({
+      votingRoomId: updatedVotingRoom?.getProps().uuid,
+      accessCode: updatedVotingRoom?.getProps().codeInvitation,
+      name: updatedVotingRoom?.getProps().name,
+      description: updatedVotingRoom?.getProps().description,
+      status: updatedVotingRoom?.getProps().votingRoomStatus,
+      participants: updatedVotingRoom?.getProps().participants,
+    });
+  }
 
-  //   res.status(200).json({
-  //     votingRoomId: votingRoom?.getProps().votingRoomId,
-  //     accessCode: votingRoom?.getProps().accessCode,
-  //     name: votingRoom?.getProps().name,
-  //     description: votingRoom?.getProps().description,
-  //     startTime: votingRoom?.getProps().startTime,
-  //     endTime: votingRoom?.getProps().endTime,
-  //   });
-  // }
+  public async updateVotingRoomStatus(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    const { votingRoomId } = req.params;
+    const { newStatus } = req.body;
 
-  // public async deleteVotingRoom(req: Request, res: Response): Promise<void> {
-  //   const { votingRoomId } = req.params;
-  //   await this.votingRoomService.deleteVotingRoom(votingRoomId!);
-  //   res.status(204).send();
-  // }
+    const updatedVotingRoom =
+      await this.votingRoomService.updateVotingRoomStatus(
+        votingRoomId!,
+        newStatus
+      );
 
+    if (!updatedVotingRoom) {
+      throw new Error("Voting Room not found");
+    }
+
+    res.status(200).json({
+      votingRoomId: updatedVotingRoom?.getProps().uuid,
+      accessCode: updatedVotingRoom?.getProps().codeInvitation,
+      name: updatedVotingRoom?.getProps().name,
+      description: updatedVotingRoom?.getProps().description,
+      status: updatedVotingRoom?.getProps().votingRoomStatus,
+      participants: updatedVotingRoom?.getProps().participants,
+    });
+  }
+
+  public async getAllVotingRoomByUserId(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    const { userId } = (req as any).user;
+
+    if (!userId) {
+      throw new Error("User ID not found");
+    }
+
+    const votingRooms = await this.votingRoomService.getAllVotingRoomByUserId(
+      userId!
+    );
+
+    res.status(200).json(votingRooms);
+  }
 }

@@ -15,7 +15,7 @@ export const useLogin = () => {
   } = useMutation({
     mutationKey: ["auth/login"],
     mutationFn: AuthenticationServices.login,
-    retry: 1, // Número de intentos de en caso de error en las consultas
+    retry: 1, // Number of retries in case of query errors
     onSuccess: (data) => {
       if (data.token) {
         setAuth(data.token);
@@ -32,6 +32,6 @@ export const useLogin = () => {
     isPending,
     isError,
     error,
-    // Aquí puedes devolver cualquier información que necesites para el manejo de errores o carga de datos
+    // Here you can return any information you need for error handling or data loading
   };
 };

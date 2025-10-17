@@ -22,7 +22,6 @@ export const createSocketServer = (
 
   // Evento de conexion global
   io.on("connection", async (socket) => {
-    // console.log("Nuevo cliente conectado:", socket.id);
 
     const token = socket.handshake.auth.token; // Obtenemos el token
 
@@ -38,6 +37,15 @@ export const createSocketServer = (
 
       // Añadimos la conexion al SocketManager
       socketManager.addConnection(userId.userId, socket.id);
+
+      socket.on("sendMessage", ({ toUserId, message }: { toUserId: string; message: string }) => {
+        const recipientSocketIds = socketManager.getSocketIds(toUserId);
+        if (recipientSocketIds) {
+          recipientSocketIds.forEach(recipientSocketId => {
+            io.to(recipientSocketId).emit("receiveMessage", { fromUserId: userId.userId, message });
+          });
+        }
+      });
 
       socket.on("disconnect", () => {
         // Eliminamos la conexion del SocketManager

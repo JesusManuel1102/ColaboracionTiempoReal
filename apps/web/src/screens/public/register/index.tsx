@@ -47,10 +47,10 @@ const Register = () => {
           <div className="bg-card border-border shadow-xl p-4 rounded-lg">
             <div className="space-y-1 text-center">
               <div className="text-3xl font-bold text-foreground mb-2">
-                Crear Cuenta
+                Create Account
               </div>
               <div className="text-muted-foreground">
-                Completa el formulario para comenzar a usar VoteSync
+                Fill out the form to start using VoteSync
               </div>
             </div>
             <div>
@@ -61,9 +61,9 @@ const Register = () => {
                   icon={<Mail />}
                   id="username"
                   name="username"
-                  label="Nombre de usuario:"
+                  label="Username:"
                   typeInput="text"
-                  placeholder="Jose Gutierres"
+                  placeholder="John Doe"
                   value={FormData.username}
                   onChange={handleChange}
                   error={FormDataError.username}
@@ -73,9 +73,9 @@ const Register = () => {
                   icon={<Mail />}
                   id="email"
                   name="email"
-                  label="Correo Electrónico:"
+                  label="Email:"
                   typeInput="email"
-                  placeholder="tu@email.com"
+                  placeholder="your@email.com"
                   value={FormData.email}
                   onChange={handleChange}
                   error={FormDataError.email}
@@ -84,7 +84,7 @@ const Register = () => {
                 <Label
                   id="password"
                   name="password"
-                  label="Contraseña:"
+                  label="Password:"
                   typeInput={IsVisiblePassword === true ? "text" : "password"}
                   value={FormData.password}
                   onChange={handleChange}
@@ -99,17 +99,17 @@ const Register = () => {
                   loading={register.isPending}
                   disabled={register.isPending}
                   className="bg-gray-900 text-white p-2 rounded-md mt-3 mb-4 cursor-pointer hover:bg-primary/90 transition-colors">
-                  Crear cuenta
+                  Create account
                 </Button>
               </form>
             </div>
             <div className="flex flex-col gap-4">
               <div className="text-sm text-center text-muted-foreground">
-                ¿Ya tienes una cuenta?{" "}
+                Already have an account?{" "}
                 <Link
                   to={"/login"}
                   className="text-primary hover:underline font-medium">
-                  Ingresa aqui
+                  Login here
                 </Link>
               </div>
             </div>
@@ -125,11 +125,11 @@ const Register = () => {
         {/* Content */}
         <div className="flex flex-col items-center justify-center text-center w-full">
           <h2 className="text-xl font-bold text-foreground mb-2 text-balance">
-            Únete a miles de equipos
+            Join thousands of teams
           </h2>
           <p className="text-base text-gray-400 mb-5 max-w-md text-pretty">
-            Colabora con tu equipo, vota en tiempo real y visualiza resultados
-            al instante
+            Collaborate with your team, vote in real time and visualize results
+            instantly
           </p>
 
           {/* Illustration placeholder */}
@@ -159,10 +159,10 @@ const Register = () => {
                 </div>
                 <div>
                   <p className="font-medium text-foreground">
-                    Análisis detallado
+                    Detailed analysis
                   </p>
                   <p className="text-sm text-gray-400">
-                    Resultados en tiempo real
+                    Real-time results
                   </p>
                 </div>
               </div>
@@ -174,10 +174,10 @@ const Register = () => {
                 </div>
                 <div>
                   <p className="font-medium text-foreground">
-                    Chat en tiempo real
+                    Real-time chat
                   </p>
                   <p className="text-sm text-gray-400">
-                    Discute mientras votas
+                    Discuss while you vote
                   </p>
                 </div>
               </div>
@@ -188,9 +188,9 @@ const Register = () => {
                   <TrendingUp className="size-5 text-purple-400" />
                 </div>
                 <div>
-                  <p className="font-medium text-foreground">Fácil de usar</p>
+                  <p className="font-medium text-foreground">Easy to use</p>
                   <p className="text-sm text-gray-400">
-                    Interfaz intuitiva y moderna
+                    Intuitive and modern interface
                   </p>
                 </div>
               </div>

@@ -14,8 +14,6 @@ export const authenticateToken = (tokenService: ItokenService) => {
     try {
       const decoded: any = tokenService.verifyToken(token);
 
-      console.log("Decoded Token:", decoded.userId);
-
       (req as any).user = { userId: decoded.userId }; // Adjuntar userId al objeto req
       next();
     } catch (error) {

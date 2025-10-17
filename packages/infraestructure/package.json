@@ -46,6 +46,7 @@
     "typescript": "^5.9.3"
   },
   "dependencies": {
+    "mongodb": "^6.0.0",
     "@repo/domain": "workspace:*",
     "@repo/shared": "workspace:*",
     "mongoose": "^8.19.0"

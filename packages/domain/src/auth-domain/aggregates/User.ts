@@ -8,7 +8,6 @@ export interface UserProps {
   password: HashedPassword;
   isVerified: boolean;
   isOnline: boolean;
-  // isActive: boolean;
   apiKey?: string;
   createdAt?: Date;
   updatedAt?: Date;
@@ -61,18 +60,37 @@ export class User {
   public get isOnline(): boolean {
     return this.props.isOnline;
   }
-  // public get isActive(): boolean { return this.props.isActive }
-  // public get apiKey(): string | undefined { return this.props.apiKey }
 
+  public get apiKey(): string | undefined {
+    return this.props.apiKey;
+  }
+
+  public get createdAt(): Date | undefined {
+    return this.props.createdAt;
+  }
+
+  public get updatedAt(): Date | undefined {
+    return this.props.updatedAt;
+  }
+
+  /**
+   * Marks the user as verified.
+   */
   public markAsVerified(): void {
     this.props.isVerified = true;
   }
 
+  /**
+   * Marks the user as online.
+   */
   public markAsOnline(): void {
     this.props.isOnline = true;
   }
 
-  // Devuelve la copia de las propiedades del usuario
+  /**
+   * Returns a copy of the user's properties.
+   * @returns {UserProps} A copy of the user's properties.
+   */
   public getProps(): UserProps {
     return { ...this.props };
   }

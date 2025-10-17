@@ -10,8 +10,6 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "type-check": "turbo run type-check",
     "check-types": "turbo run check-types",
-    "build:all": "turbo run build",
-    "build:apps": "turbo run build --filter=@repo/apps",
     "build:api": "turbo run build --filter=api-gateway",
     "build:web": "turbo run build --filter=web",
     "build:domain": "turbo run build --filter=@repo/domain",
@@ -25,7 +23,7 @@
     "turbo": "^2.5.8",
     "typescript": "5.9.2"
   },
-  "packageManager": "pnpm@10.18.1",
+  "packageManager": "pnpm@10.18.2",
   "engines": {
     "node": ">=18"
   }

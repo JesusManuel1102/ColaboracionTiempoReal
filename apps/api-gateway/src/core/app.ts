@@ -45,12 +45,14 @@ async function initApp() {
   Application.disable("x-powered-by");
 
   // Configuración de Socket.IO
-  const { io } = createSocketServer(
+  const { io, socketManager } = createSocketServer(
     server,
     container.tokenService,
     originWhitelist
   );
   // Configuramos los events handler para el socket
+
+  console.log("Usuarios conectados: ", socketManager.getAllConnectedUsers())
 
   return server;
 }

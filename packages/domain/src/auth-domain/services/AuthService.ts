@@ -33,7 +33,7 @@ export class AuthServices {
 
     await this.userRepository.create(newUser);
 
-    // 1. Crea la instancia de la clase del evento, no un objeto plano.
+    // 1. Create an instance of the event class, not a plain object.
     const userRegisteredEvent = new UserRegisteredEvent({
       userId: newUser.uuid.toString(),
       username: newUser.username.toString(),
@@ -60,7 +60,7 @@ export class AuthServices {
       throw new Error("Invalid password");
     }
 
-    // Aqui podriamos implementar evento
+    // Here we could implement an event
 
     return user;
   }

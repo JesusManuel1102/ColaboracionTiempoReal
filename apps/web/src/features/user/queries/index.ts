@@ -8,8 +8,6 @@ export const useGetProfile = () => {
     queryFn: () => profileServices.getProfile(),
   });
 
-  console.log("Informacion del perfil del usuario:", data);
-
   return {
     data,
     isLoading,

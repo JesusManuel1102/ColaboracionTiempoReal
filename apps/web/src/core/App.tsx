@@ -9,7 +9,7 @@ function App() {
       <Suspense
         fallback={
           <>
-            Cargando contenido... <br /> Por favor espere!
+            Loading content... <br /> Please wait!
           </>
         }>
         <QueryClientProvider client={QueryClientConfig}>
